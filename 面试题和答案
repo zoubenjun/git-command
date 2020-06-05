@@ -1,0 +1,31 @@
+dSYM你是如何分析的
+方法1 使用XCode
+
+这种方法可能是最容易的方法了。
+
+要使用Xcode符号化 crash log，你需要下面所列的3个文件：
+crash报告（.crash文件）
+符号文件 (.dsymb文件)
+应用程序文件 (appName.app文件，把IPA文件后缀改为zip，然后解压，Payload目录下的appName.app文件), 这里的appName是你的应用程序的名称。
+把这3个文件放到同一个目录下，打开Xcode的Window菜单下的organizer，然后点击Devices tab，然后选中左边的Device Logs。
+然后把.crash文件拖到Device Logs或者选择下面的import导入.crash文件。
+这样你就可以看到crash的详细log了。
+方法2 使用命令行工具symbolicatecrash
+
+有时候Xcode不能够很好的符号化crash文件。我们这里介绍如何通过symbolicatecrash来手动符号化crash log。
+在处理之前，请依然将“.app“, “.dSYM”和 ".crash"文件放到同一个目录下。现在打开终端(Terminal)然后输入如下的命令：
+export DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer
+然后输入命令：
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/Library/PrivateFrameworks/DTDeviceKitBase.framework/Versions/A/Resources/symbolicatecrash appName.crash appName.app > appName.log
+现在，符号化的crash log就保存在appName.log中了。
+方法3 使用命令行工具atos
+
+如果你有多个“.ipa”文件，多个".dSYMB"文件，你并不太确定到底“dSYMB”文件对应哪个".ipa"文件，那么，这个方法就非常适合你。
+特别当你的应用发布到多个渠道的时候，你需要对不同渠道的crash文件，写一个自动化的分析脚本的时候，这个方法就极其有用。
+atos -arch 内核类型 -o dSYM 路径 -l base address   load address 
+eg:xcrun atos -o appName.app.dSYM/Contents/Resources/DWARF/appName -l 0x0000000102c74000
+http://blog.sina.com.cn/s/blog_76a1980f0102wjcf.html命令行使用介绍。
+https://pan.baidu.com/s/1c2oo3vE这里有一个工具可以直接使用。
+
+方法4 就是使用类似bugly的第三方。
+这样的第三方会收集崩溃信息，虽然这样的第三方已经对崩溃信息进行了符号化。但是有时候并不能准确的定位到是哪一个类哪一个方法产生的崩溃。那就需要我们对收集到的crash日志进行符号化。
