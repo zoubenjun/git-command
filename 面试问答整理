@@ -1,3 +1,5 @@
+没有写原创的地方都是复制粘贴的，内容大多来自简书，掘金。
+
 iOS 中持久化方式有哪些？
 NSUserDefaults，归档(序列化)，文件，数据库，CoreData，KeyChain
 
@@ -118,6 +120,26 @@ MJRefresh封装
 字典转模型
 
 MJExtension/JsonModel/YYModel等转Model第三方库实现原理：
-1.遍历模型中的属性,然后拿到属性名作为键值去字典中寻找值.
-2.找到值后根据模型的属性的类型将值转成正确的类型
-3.赋值
+https://www.jianshu.com/p/62d4f86c7482
+http://southpeak.github.io/2014/10/25/objective-c-runtime-1/
+1、解析实体信息
+自定义的Model类调用modelWithDictionary:、modelWithJSON:进行Model的初始化，接下来_YYModelMeta类将会为我们完成解析的工作。
+解析的目的是获取Model类的方法、属性、实例变量信息，这些信息将保存在YYClassInfo中。
+在解析之初会首先检查是否存在缓存，如果有缓存则直接返回缓存的_YYModelMeta对象。
+通常情况下，每一个类的属性、实例变量的解析只会进行一次，成功解析一次后的数据将会被缓存起来，
+只有当设置了YYClassInfo的_needUpdate才会进行新的解析，也就是进行动态的添加属性、修改方法后需要更新。
+缓存数据保存在一个静态的CFMutableDictionaryRef字典当中，并通过dispatch_semaphore_t信号量来确保字典读取的线程安全性。
+没有缓存，则创建_YYModelMeta和YYClassInfo对象，其中YYClassInfo也加入了缓存处理。
+YYClassInfo的_update会为我们完成具体的解析，该方法依次对方法、属性、实例变量进行了解析。
+所以这里着重说一下属性的解析，通过class_copyPropertyList获取到属性列表，并为每一个属性生成一个YYClassPropertyInfo对象，
+该对象会保存在YYClassInfo的_propertyInfos数组中。生成的YYClassPropertyInfo对象主要包含了属性名、
+setter、getter、属性数据类型等，这些信息都有对应的runtime方法。其中核心在于利用类型编码完成属性数据类型的解析。
+2、生成映射关系
+通过生成的YYClassInfo来建立与数据源之间的映射关系，也就是生成了一个以数据源字典的key为key，
+以_YYModelPropertyMeta对象为值的字典_mapper，核心类为_YYModelPropertyMeta，
+该类包含了属性的信息和用户自定义的信息，例如属性的setter、getter、对应数据源的key、子类容器等。
+在生成_mapper的过程中包括白名单、黑名单、容器类、自定义数据源的key与属性名映射关系的处理，
+具体可参见_YYModelMeta类的initWithClass:方法。
+3、设置属性值
+上述两个步骤均是在_YYModelMeta中完成的，第三部回到NSObject+YYModel分类中，用modelSetWithDictionary:方法完成属性值的设置。
+objc_msgSend
