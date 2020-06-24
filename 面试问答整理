@@ -28,9 +28,9 @@ UIViewController的完整生命周期
 -[ViewController init]；
 -[ViewController loadView]；
 -[ViewController viewDidLoad]；
--[ViewController viewWillDisappear:]；
 -[ViewController viewWillAppear:]；
 -[ViewController viewDidAppear:]；
+-[ViewController viewWillDisappear:]；
 -[ViewController viewDidDisappear:]；
 
 iOS frame和Bounds 以及frame和bounds区别
