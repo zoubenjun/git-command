@@ -1,1 +1,22 @@
-runtime
+来自：http://southpeak.github.io/2014/10/25/objective-c-runtime
+
+Objective-C的Runtime是什么？
+https://developer.apple.com/documentation/objectivec/objective-c_runtime?language=objc
+苹果文档解释：Objective-C Runtime 是一个运行时库，它提供对Objective-C语言的动态属性的支持，因此，所有Objective-C应用程序都将其链接到该库。
+The Objective-C runtime is a runtime library that provides support for the dynamic properties of 
+the Objective-C language, and as such is linked to by all Objective-C apps.
+
+Objective-C类是由Class类型来表示的，Class是一个指向objc_class结构体的指针。
+objc_class结构体（isa，super_class，name，version，info，instance_size，ivars，methodLists，cache，protocols）
+    Class isa  OBJC_ISA_AVAILABILITY;
+    Class super_class                   	  OBJC2_UNAVAILABLE;	// 父类
+    const char *name                      	OBJC2_UNAVAILABLE;	// 类名
+    long version                          	OBJC2_UNAVAILABLE;	// 类的版本信息，默认为0
+    long info                            	  OBJC2_UNAVAILABLE;	// 类信息，供运行期使用的一些位标识
+    long instance_size                   	  OBJC2_UNAVAILABLE;	// 该类的实例变量大小
+    struct objc_ivar_list *ivars         	  OBJC2_UNAVAILABLE;	// 该类的成员变量链表
+    struct objc_method_list **methodLists 	OBJC2_UNAVAILABLE;	// 方法定义的链表
+    struct objc_cache *cache              	OBJC2_UNAVAILABLE;	// 方法缓存
+    struct objc_protocol_list *protocols    OBJC2_UNAVAILABLE;	// 协议链表
+    
+meta-class是一个类对象的类。当我们向一个对象发送消息时，runtime会在这个对象所属的这个类的方法列表中查找方法；而向一个类发送消息时，会在这个类的meta-class的方法列表中查找。
