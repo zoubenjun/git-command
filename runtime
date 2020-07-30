@@ -20,3 +20,9 @@ objc_class结构体（isa，super_class，name，version，info，instance_size�
     struct objc_protocol_list *protocols    OBJC2_UNAVAILABLE;	// 协议链表
     
 meta-class是一个类对象的类。当我们向一个对象发送消息时，runtime会在这个对象所属的这个类的方法列表中查找方法；而向一个类发送消息时，会在这个类的meta-class的方法列表中查找。
+
+runtime能做啥
+
+在程序运行过程中，动态的创建类，动态添加、修改这个类的属性和方法；
+遍历一个类中所有的成员变量、属性、以及所有方法
+消息传递、转发
