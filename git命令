@@ -1,4 +1,5 @@
 
+<<<<<<< HEAD
 # 修改已提交的log日志
 
 $ 使用命令 "git rebase -i HEAD^^^^^"，可以修改之前的log，HEAD后的^代表之前的一次提交记录，有几个就表示可以查询出几个历史记录。但是^多余实际的提交记录次数会报错。
@@ -68,6 +69,10 @@ pick 52c4702 add symbol $
 $ 和修改提交记录类似，只需要把 pick 改为 s ，而修改记录是把 pick 改为 r 
 使用命令 "git rebase -i HEAD^^^" 
 
+=======
+# 合并多次Commit log
+$ 尝试命令 "git rebase -i HEAD^^^"
+>>>>>>> 9ea9e04ebb78e2e6eae224cc2be932a76c543cc9
 
 一、新建代码库
 
