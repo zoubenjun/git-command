@@ -6,7 +6,8 @@ $ 使用命令 "git rebase -i HEAD^^^^^"，可以修改之前的log，HEAD后的
 - 使用git log可以查看之前的提交记录
 - 然后输入"git rebase -i HEAD^^^"查询出来的结果是这样的
 
-```pick 9c7f85d add someting, wait fix
+```
+pick 9c7f85d add someting, wait fix
 pick d6c5bd5 add new command
 pick 52c4702 add symbol $
 
@@ -41,7 +42,8 @@ r  9c7f85d add someting, wait fix
 pick d6c5bd5 add new command
 pick 52c4702 add symbol $
 
-```add someting, wait fix
+```
+add someting, wait fix
 
 # Please enter the commit message for your changes. Lines starting
 # with '#' will be ignored, and an empty message aborts the commit.
