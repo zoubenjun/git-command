@@ -1,3 +1,7 @@
+
+# 合并多次Commit log
+
+
 一、新建代码库
 
 # 在当前目录新建一个Git代码库
@@ -268,3 +272,5 @@ $ git stash pop
 
 # 生成一个可供发布的压缩包
 $ git archive
+
+
