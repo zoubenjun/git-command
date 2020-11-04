@@ -1,6 +1,73 @@
 
-# 合并多次Commit log
-$ 尝试命令 "git rebase -i HEAD^^^"
+# 修改已提交的log日志
+
+$ 使用命令 "git rebase -i HEAD^^^^^"，可以修改之前的log，HEAD后的^代表之前的一次提交记录，有几个就表示可以查询出几个历史记录。但是^多余实际的提交记录次数会报错。
+
+- 使用git log可以查看之前的提交记录
+- 然后输入"git rebase -i HEAD^^^"查询出来的结果是这样的
+
+```pick 9c7f85d add someting, wait fix
+pick d6c5bd5 add new command
+pick 52c4702 add symbol $
+
+# Rebase e2badd5..52c4702 onto e2badd5 (3 commands)
+#
+# Commands:
+# p, pick <commit> = use commit
+# r, reword <commit> = use commit, but edit the commit message
+# e, edit <commit> = use commit, but stop for amending
+# s, squash <commit> = use commit, but meld into previous commit
+# f, fixup <commit> = like "squash", but discard this commit's log message
+# x, exec <command> = run command (the rest of the line) using shell
+# b, break = stop here (continue rebase later with 'git rebase --continue')
+# d, drop <commit> = remove commit
+# l, label <label> = label current HEAD with a name
+# t, reset <label> = reset HEAD to a label
+# m, merge [-C <commit> | -c <commit>] <label> [# <oneline>]
+# .       create a merge commit using the original merge commit's
+# .       message (or the oneline, if no original merge commit was
+# .       specified). Use -c <commit> to reword the commit message.
+#
+# These lines can be re-ordered; they are executed from top to bottom.
+#
+# If you remove a line here THAT COMMIT WILL BE LOST.
+#
+# However, if you remove everything, the rebase will be aborted.
+#
+# Note that empty commits are commented out
+```
+- 修改上面前几行中的某行或者全部的pick为r,表示需要修改。例如我想修改第一个(键盘输入i，进入修改模式，内容修改完后按esc按钮再输入:wq表示退出并保存)
+r  9c7f85d add someting, wait fix
+pick d6c5bd5 add new command
+pick 52c4702 add symbol $
+
+```add someting, wait fix
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# Date:      Wed Nov 4 15:58:20 2020 +0800
+#
+# interactive rebase in progress; onto e2badd5
+# Last command done (1 command done):
+#    reword 9c7f85d add someting, wait fix
+# Next commands to do (2 remaining commands):
+#    pick d6c5bd5 add new command
+#    pick 52c4702 add symbol $
+# You are currently editing a commit while rebasing branch 'master' on 'e2badd5'.
+#
+# Changes to be committed:
+#       modified:   "git\345\221\275\344\273\244"
+#
+```
+- 把第一行log修改为需要的内容，然后保存退出即可。（键盘输入i，进入修改模式，内容修改完后按esc按钮再输入:wq表示退出并保存）
+- 输入git log可以查看修改后的log
+
+
+# 合并多次提交记录
+$ 和修改提交记录类似，只需要把 pick 改为 s ，而修改记录是把 pick 改为 r 
+使用命令 "git rebase -i HEAD^^^" 
+
 
 一、新建代码库
 
