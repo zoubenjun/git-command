@@ -1,6 +1,6 @@
 
 # 合并多次Commit log
-
+尝试命令 "git rebase -i HEAD^^^"
 
 一、新建代码库
 
